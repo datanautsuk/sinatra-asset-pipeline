@@ -16,8 +16,9 @@ module Sinatra
       app.set_default :assets_digest, true
       app.set_default :assets_debug, false
       app.set_default :precompiled_environments, %i(staging production)
+      app.set_default :served_environments, %i(test development)
 
-      app.set :static, :true
+      app.set :static, true
       app.set :static_cache_control, [:public, :max_age => 60 * 60 * 24 * 365]
 
       app.configure do
@@ -53,7 +54,7 @@ module Sinatra
 
       app.helpers ::Sprockets::Helpers
 
-      app.configure :test, :development do
+      app.configure(*app.served_environments) do
         app.get "#{app.assets_prefix}/*" do |path|
           env_sprockets = request.env.dup
           env_sprockets['PATH_INFO'] = path
