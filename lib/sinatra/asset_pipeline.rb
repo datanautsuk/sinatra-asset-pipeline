@@ -15,8 +15,8 @@ module Sinatra
       app.set_default :assets_prefix, '/assets'
       app.set_default :assets_digest, true
       app.set_default :assets_debug, false
-      app.set_default :precompiled_environments, %i(staging production)
-      app.set_default :served_environments, %i(test development)
+      app.set_default :precompiled_environments, %i(staging production test)
+      app.set_default :served_environments, %i(development)
 
       app.set :static, true
       app.set :static_cache_control, [:public, :max_age => 60 * 60 * 24 * 365]
